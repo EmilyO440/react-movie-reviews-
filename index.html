@@ -12,8 +12,6 @@
   <div id="root"></div>
 
   <script type="text/babel">
-
-    // Stars Component
     const Stars = ({ rating, onRate }) => {
       const starIcons = Array.from({ length: 5 }, (_, index) => (
         <span
@@ -27,11 +25,8 @@
 
       return <div>{starIcons}</div>;
     };
-
-    // Review Component
     const Review = ({ text }) => <p>{text}</p>;
 
-    // ReviewForm Component
     class ReviewForm extends React.Component {
       constructor(props) {
         super(props);
@@ -64,8 +59,6 @@
         );
       }
     }
-
-    // ReviewList Component
     const ReviewList = ({ reviews }) => (
       <div>
         <h3>User Reviews:</h3>
@@ -74,8 +67,6 @@
         ))}
       </div>
     );
-
-    // Movie Component
     class Movie extends React.Component {
       constructor(props) {
         super(props);
@@ -108,7 +99,6 @@
       }
     }
 
-    // MovieList Component
     class MovieList extends React.Component {
       constructor(props) {
         super(props);
@@ -128,7 +118,6 @@
               rating: 4,
               reviews: [],
             },
-            // Add more movies as needed
           ],
         };
       }
@@ -148,8 +137,6 @@
     ReactDOM.render(<MovieList />, document.getElementById('root'));
 
   </script>
-
-  <!-- Include React and Babel scripts -->
   <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
