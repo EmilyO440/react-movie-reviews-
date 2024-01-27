@@ -5,6 +5,80 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie Review App</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    #root {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .movie {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
+    }
+
+    .movie img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .movie p {
+      margin: 10px 0;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .stars span {
+      font-size: 24px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    .reviews {
+      margin-top: 20px;
+    }
+
+    .review {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .review textarea {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .review button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 
 <body>
@@ -12,21 +86,25 @@
   <div id="root"></div>
 
   <script type="text/babel">
+
+    // Stars Component
     const Stars = ({ rating, onRate }) => {
       const starIcons = Array.from({ length: 5 }, (_, index) => (
         <span
           key={index}
           onClick={() => onRate(index + 1)}
-          style={{ cursor: 'pointer' }}
         >
           {index < rating ? '★' : '☆'}
         </span>
       ));
 
-      return <div>{starIcons}</div>;
+      return <div className="stars">{starIcons}</div>;
     };
-    const Review = ({ text }) => <p>{text}</p>;
 
+    // Review Component
+    const Review = ({ text }) => <div className="review">{text}</div>;
+
+    // ReviewForm Component
     class ReviewForm extends React.Component {
       constructor(props) {
         super(props);
@@ -59,14 +137,18 @@
         );
       }
     }
+
+    // ReviewList Component
     const ReviewList = ({ reviews }) => (
-      <div>
+      <div className="reviews">
         <h3>User Reviews:</h3>
         {reviews.map((review, index) => (
           <Review key={index} text={review} />
         ))}
       </div>
     );
+
+    // Movie Component
     class Movie extends React.Component {
       constructor(props) {
         super(props);
@@ -86,12 +168,14 @@
 
       render() {
         return (
-          <div>
+          <div className="movie">
             <h2>{this.props.movie.title}</h2>
             <img src={this.props.movie.image} alt={this.props.movie.title} />
             <p>{this.props.movie.synopsis}</p>
-            <p>Rating: {this.state.rating}</p>
-            <Stars rating={this.state.rating} onRate={this.handleRate} />
+            <div className="rating">
+              <p>Rating: {this.state.rating}</p>
+              <Stars rating={this.state.rating} onRate={this.handleRate} />
+            </div>
             <ReviewList reviews={this.state.reviews} />
             <ReviewForm onSubmit={this.handleReviewSubmit} />
           </div>
@@ -99,6 +183,7 @@
       }
     }
 
+    // MovieList Component
     class MovieList extends React.Component {
       constructor(props) {
         super(props);
@@ -118,6 +203,7 @@
               rating: 4,
               reviews: [],
             },
+            // Add more movies as needed
           ],
         };
       }
@@ -137,6 +223,8 @@
     ReactDOM.render(<MovieList />, document.getElementById('root'));
 
   </script>
+
+  <!-- Include React and Babel scripts -->
   <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -144,3 +232,4 @@
 </body>
 
 </html>
+
