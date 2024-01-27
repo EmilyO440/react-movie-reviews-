@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Review App</title>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    // Stars Component
+    const Stars = ({ rating, onRate }) => {
+      const starIcons = Array.from({ length: 5 }, (_, index) => (
+        <span
+          key={index}
+          onClick={() => onRate(index + 1)}
+          style={{ cursor: 'pointer' }}
+        >
+          {index < rating ? '★' : '☆'}
+        </span>
+      ));
+
+      return <div>{starIcons}</div>;
+    };
+
+    // Review Component
+    const Review = ({ text }) => <p>{text}</p>;
+
+    // ReviewForm Component
+    class ReviewForm extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          reviewText: '',
+        };
+      }
+
+      handleInputChange = (event) => {
+        this.setState({ reviewText: event.target.value });
+      };
+
+      handleSubmit = (event) => {
+        event.preventDefault();
+        this.props.onSubmit(this.state.reviewText);
+        this.setState({ reviewText: '' });
+      };
+
+      render() {
+        return (
+          <form onSubmit={this.handleSubmit}>
+            <textarea
+              value={this.state.reviewText}
+              onChange={this.handleInputChange}
+              placeholder="Write your review here..."
+              required
+            />
+            <button type="submit">Submit Review</button>
+          </form>
+        );
+      }
+    }
+
+    // ReviewList Component
+    const ReviewList = ({ reviews }) => (
+      <div>
+        <h3>User Reviews:</h3>
+        {reviews.map((review, index) => (
+          <Review key={index} text={review} />
+        ))}
+      </div>
+    );
+
+    // Movie Component
+    class Movie extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          rating: props.movie.rating,
+          reviews: props.movie.reviews,
+        };
+      }
+
+      handleRate = (rating) => {
+        this.setState({ rating });
+      };
+
+      handleReviewSubmit = (text) => {
+        this.setState({ reviews: [...this.state.reviews, text] });
+      };
+
+      render() {
+        return (
+          <div>
+            <h2>{this.props.movie.title}</h2>
+            <img src={this.props.movie.image} alt={this.props.movie.title} />
+            <p>{this.props.movie.synopsis}</p>
+            <p>Rating: {this.state.rating}</p>
+            <Stars rating={this.state.rating} onRate={this.handleRate} />
+            <ReviewList reviews={this.state.reviews} />
+            <ReviewForm onSubmit={this.handleReviewSubmit} />
+          </div>
+        );
+      }
+    }
+
+    // MovieList Component
+    class MovieList extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          movies: [
+            {
+              title: 'Movie 1',
+              image: 'movie1.jpg',
+              synopsis: 'Synopsis for Movie 1',
+              rating: 3,
+              reviews: [],
+            },
+            {
+              title: 'Movie 2',
+              image: 'movie2.jpg',
+              synopsis: 'Synopsis for Movie 2',
+              rating: 4,
+              reviews: [],
+            },
+            // Add more movies as needed
+          ],
+        };
+      }
+
+      render() {
+        return (
+          <div>
+            <h1>Movie List</h1>
+            {this.state.movies.map((movie, index) => (
+              <Movie key={index} movie={movie} />
+            ))}
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<MovieList />, document.getElementById('root'));
+
+  </script>
+
+  <!-- Include React and Babel scripts -->
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</body>
+
+</html>
