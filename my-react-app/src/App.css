@@ -1,0 +1,71 @@
+/* App.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.app {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.movie {
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.stars {
+  color: #ffd700;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.stars span {
+  display: inline-block;
+}
+
+.stars .star {
+  margin: 0 2px;
+}
+
+.stars .filled {
+  color: #ffac33;
+}
+
+.review {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.review-form textarea {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.review-form button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.review-form button:hover {
+  background-color: #45a049;
+}
+
+
+
+
